@@ -96,7 +96,6 @@ const addPokemon = (id, parentUl) => {
         const pokeLi = renderPokemon(data)
         parentUl.append(pokeLi)
         } else {
-            console.log(data)
             alert(`${data.error}`)
         }
     })
