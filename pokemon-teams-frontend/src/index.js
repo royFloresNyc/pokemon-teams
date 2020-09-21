@@ -11,14 +11,20 @@ const getTrainers = () => {
     fetch(TRAINERS_URL)
     .then(resp => resp.json())
     .then(trainers => {
-        trainers.forEach(trainer => {
-            createTrainerCards(trainer)
-        })
+        renderTrainers(trainers)
     })
 }
 
-const createTrainerCards = (trainer) => {
+const renderTrainers = (trainerCollection) => {
     const mainContainer = document.querySelector('main')
+    trainerCollection.forEach(trainer => {
+        const trainerCard = createTrainerCard(trainer)
+        mainContainer.append(trainerCard)
+    })
+}
+
+const createTrainerCard = (trainer) => {
+    
     const trainerCard = document.createElement('div')
     trainerCard.className = "card"
     trainerCard.setAttribute('data-id', `${trainer.id}`) 
@@ -34,21 +40,22 @@ const createTrainerCards = (trainer) => {
     })
 
     trainerCard.append(pokemonUl)
-    mainContainer.append(trainerCard)
+
+    return trainerCard
 }
 
 const renderPokemon = (pokemon) => {
     const pokemonLi = document.createElement('li')
-        pokemonLi.textContent = `${pokemon.nickname}`
+    pokemonLi.textContent = `${pokemon.nickname}`
 
-        const button = document.createElement('button')
-        button.className = "release"
-        button.dataset.id = `${pokemon.id}`
-        button.textContent = "Release"
+    const button = document.createElement('button')
+    button.className = "release"
+    button.dataset.id = `${pokemon.id}`
+    button.textContent = "Release"
 
-        pokemonLi.append(button)
-        
-        return pokemonLi
+    pokemonLi.append(button)
+    
+    return pokemonLi
 }
 
 const createClickHandlers = () => {
@@ -56,7 +63,7 @@ const createClickHandlers = () => {
         if (e.target.innerText === "Add Pokemon"){
             const pokeUl = e.target.nextElementSibling
             const trainerId = e.target.dataset.trainerId
-            const pokeLi = addPokemon(trainerId, pokeUl)
+            addPokemon(trainerId, pokeUl)
 
         } else if (e.target.matches(".release")){
             const pokeId = e.target.dataset.id
