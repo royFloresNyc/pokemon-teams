@@ -14,7 +14,6 @@ const getTrainers = () => {
         trainers.forEach(trainer => {
             createTrainerCards(trainer)
         })
-        
     })
 }
 
@@ -93,8 +92,8 @@ const addPokemon = (id, parentUl) => {
     .then(resp => resp.json())
     .then(data => {
         if(parentUl.children.length < 6) {
-        const pokeLi = renderPokemon(data)
-        parentUl.append(pokeLi)
+            const pokeLi = renderPokemon(data)
+            parentUl.append(pokeLi)
         } else {
             alert(`${data.error}`)
         }
